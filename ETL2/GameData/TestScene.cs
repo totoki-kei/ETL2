@@ -1,8 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Totoki.Util;
 
 namespace Totoki.ETL.GameData {
@@ -15,14 +11,14 @@ namespace Totoki.ETL.GameData {
 		int count;
 		public override void Update(GameTime gameTime) {
 			count++;
-#if true
+#if false
 				var b = new Bullet(count % 2);
 				b.X = 0;
 				b.Y = 0;
 				b.Direction = count / 8f + MathUtil.Pi * count % 2;
 				b.Speed = (2 - (count % 2)) / 64f;
 				AddObject(b);
-#elif false
+#elif true
 			{
 				var b = new Bullet(count % 2);
 				b.X = 0;
@@ -31,7 +27,7 @@ namespace Totoki.ETL.GameData {
 				b.Speed = (2 - (count % 2)) / 64f;
 				AddObject(b);
 			}
-#elif true
+#elif false
 			if (count % 8 == 0) {
 				var b = new Bullet(0);
 				b.X = 0;
@@ -41,10 +37,6 @@ namespace Totoki.ETL.GameData {
 				AddObject(b);
 			}
 #endif
-		}
-
-		public override void Draw(GameTime gameTime) {
-			
 		}
 
 		public override void OnMessage(object sender, Message.MessageType msg, object[] args) {

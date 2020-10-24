@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Xml.Serialization;
 
 namespace Totoki.ETL {
 	public static class Input {

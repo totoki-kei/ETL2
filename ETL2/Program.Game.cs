@@ -215,7 +215,7 @@ namespace Totoki.ETL {
 				SetDefaultDeviceStates();
 				UpdateViewProjectionMatrix();
 			} else {
-				GameObject.GetScene().ForEach(obj => (obj as GameScene)?.BeforeDraw());
+				GameObject.GetScene().ForEach(obj => (obj as GameScene)?.PrepareForDraw());
 			}
 
 			GameObject.DrawAll(gameTime);
