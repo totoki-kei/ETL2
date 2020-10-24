@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Concurrent;
 
 namespace Totoki.ETL {
 	public class Message {
@@ -27,6 +22,8 @@ namespace Totoki.ETL {
 			Null = 0,
 			Collide,
 			Kill,
+			OnAdded,
+			OnRemoved,
 		}
 
 		#region static

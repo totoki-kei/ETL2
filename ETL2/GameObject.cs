@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace Totoki.ETL {
 	public abstract class GameObject {
@@ -11,7 +8,7 @@ namespace Totoki.ETL {
 		public abstract void Update(GameTime gameTime);
 		public abstract void Draw(GameTime gameTime);
 
-		public virtual void OnMessage(object sender, Message.MessageType msg, object[] args) {
+		public virtual void OnMessage(object sender, Message.MessageType msg, params object[] args) {
 			if (msg == Message.MessageType.Kill) {
 				this.Enabled = false;
 				this.Visible = false;
@@ -35,6 +32,7 @@ namespace Totoki.ETL {
 				preObjectList.Add(p, set);
 			}
 			set.Add(obj);
+			obj.OnMessage(null, Message.MessageType.OnAdded);
 		}
 		public static void RemoveObject(GameObject obj) {
 			int p = obj.Priority;
@@ -46,9 +44,13 @@ namespace Totoki.ETL {
 			if (!result && preObjectList.TryGetValue(p, out set)) {
 				result = set.Remove(obj);
 			}
+
+			if (result) {
+				obj.OnMessage(null, Message.MessageType.OnRemoved);
+			}
 		}
-		public static void UpdateAll (GameTime gameTime){
 			
+		public static void UpdateAll (GameTime gameTime){
 			foreach (var prevObjSet in preObjectList) {
 				if (prevObjSet.Value.Count == 0) continue;
 
@@ -81,7 +83,7 @@ namespace Totoki.ETL {
 				}
 			}
 		}
-		public IEnumerable<GameObject> GetObjects(int id) {
+		public static IEnumerable<GameObject> GetObjects(int id) {
 			HashSet<GameObject> set;
 			if (!objectList.TryGetValue(id, out set)) {
 				// もとから登録されていない
@@ -91,6 +93,10 @@ namespace Totoki.ETL {
 		}
 
 		// helper
+
+		public static IEnumerable<GameObject> GetScene() => GetObjects(GameObject.Priorities.Scene);
+
+
 		/// <summary>
 		/// ぼんやりと回転する動作に使う回転行列を得る
 		/// </summary>

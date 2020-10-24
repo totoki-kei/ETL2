@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Totoki.ETL {
 	/// <summary>
@@ -43,28 +44,27 @@ namespace Totoki.ETL {
 		}
 
 		protected override void LoadContent() {
-			Effect = ToDisposeContent(new BasicEffect(GraphicsDevice) {
+			Effect = new BasicEffect(GraphicsDevice) {
 				VertexColorEnabled = true,
 				View = Matrix.CreateLookAt(new Vector3(0, 0, -5), new Vector3(0, 0, 0), Vector3.UnitY),
 				Projection = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, (float)GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Height, 0.1f, 100.0f),
 				World = Matrix.Identity
-			});
+			};
 
 			// Creates vertices for the cube
 			InitializeCube();
 
 			InitializeDepthStencil();
-
 			InitializeRasterizer();
-
 			InitializeBlendState();
-
 			InitializeStatistics();
 
 			Input.Initialize();
 
 			ship = new GameData.Ship();
 			GameObject.AddObject(ship);
+			Services.AddService(ship);
+
 			grid = new GameData.Grid();
 			GameObject.AddObject(grid);
 
@@ -157,8 +157,6 @@ namespace Totoki.ETL {
 			indices = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, indicesArray.Length, BufferUsage.None);
 			indices.SetData(indicesArray);
 
-			ToDisposeContent(vertices);
-			ToDisposeContent(indices);
 			// Create an input layout from the vertices
 			//inputLayout = VertexInputLayout.FromBuffer(0, vertices);
 			
@@ -199,15 +197,6 @@ namespace Totoki.ETL {
 			Message.PostAll();
 			GameObject.UpdateAll(gameTime);
 
-			//// Rotate the cube.
-			//var time = (float)gameTime.TotalGameTime.TotalSeconds;
-			var deg = Matrix.CreateRotationX(GameFieldDegree);
-			Effect.View = Matrix.CreateLookAt(
-				Vector3.Transform(Vector3.UnitY, deg) * GameFieldSize,
-				-Vector3.UnitY * (GameFieldSize / 4),
-				Vector3.Transform(Vector3.UnitZ, deg));
-			Effect.Projection = Matrix.CreatePerspective(GameFieldSize / 2 * (float)GraphicsDevice.Viewport.Width / (float)GraphicsDevice.Viewport.Height, GameFieldSize / 2, GameFieldSize / 2, 3 * GameFieldSize / 2);
-
 			GlobalWorldOffset = Matrix.CreateScale(-1, 1, -1);
 
 			//Debug.WriteLine("========= Update OK  =========");
@@ -220,11 +209,14 @@ namespace Totoki.ETL {
 			AddStatistics("Updates", "{0}", updateCount);
 			updateCount = 0;
 			//Debug.WriteLine("======== Draw Start ========");
-			GraphicsDevice.Clear(new Color(0, 0, 32));
 
-			GraphicsDevice.DepthStencilState = dss;
-			GraphicsDevice.RasterizerState = rs;
-			GraphicsDevice.BlendState = bs;
+			if (!GameObject.GetScene().Any()) {
+				ClearScreen();
+				SetDefaultDeviceStates();
+				UpdateViewProjectionMatrix();
+			} else {
+				GameObject.GetScene().ForEach(obj => (obj as GameScene)?.BeforeDraw());
+			}
 
 			GameObject.DrawAll(gameTime);
 			//Debug.WriteLine("========= Draw OK  =========");
@@ -233,8 +225,28 @@ namespace Totoki.ETL {
 
 			base.Draw(gameTime);
 
-			DrawTestCube(gameTime);
+			//DrawTestCube(gameTime);
 			//Debug.WriteLine("========= Draw End =========");
+		}
+
+
+		public void SetDefaultDeviceStates() {
+			GraphicsDevice.DepthStencilState = dss;
+			GraphicsDevice.RasterizerState = rs;
+			GraphicsDevice.BlendState = bs;
+		}
+
+		public void UpdateViewProjectionMatrix() {
+			var deg = Matrix.CreateRotationX(GameFieldDegree);
+			Effect.View = Matrix.CreateLookAt(
+				Vector3.Transform(Vector3.UnitY, deg) * GameFieldSize,
+				-Vector3.UnitY * (GameFieldSize / 4),
+				Vector3.Transform(Vector3.UnitZ, deg));
+			Effect.Projection = Matrix.CreatePerspective(GameFieldSize / 2 * (float)GraphicsDevice.Viewport.Width / (float)GraphicsDevice.Viewport.Height, GameFieldSize / 2, GameFieldSize / 2, 3 * GameFieldSize / 2);
+		}
+
+		public void ClearScreen(Color? color = null) {
+			GraphicsDevice.Clear(color ?? new Color(0, 0, 32));
 		}
 
 		private void DrawTestCube(GameTime gameTime) {
@@ -255,7 +267,5 @@ namespace Totoki.ETL {
 		public BasicEffect Effect { get; private set; }
 		public Matrix GlobalWorldOffset { get; private set; }
 
-		// ダミー
-		private T ToDisposeContent<T>(T t) { return t; }
 	}
 }

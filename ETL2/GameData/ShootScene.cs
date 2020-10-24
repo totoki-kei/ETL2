@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 
 namespace Totoki.ETL.GameData {
-	class ShootScene : GameObject {
-		public ShootScene() : base(0) {
+	class ShootScene : GameScene {
+		public ShootScene() {
 			//AddObject(this);
 			Enabled = true;
 			Visible = false;

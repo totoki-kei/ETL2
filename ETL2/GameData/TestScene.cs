@@ -6,8 +6,8 @@ using System.Text;
 using Totoki.Util;
 
 namespace Totoki.ETL.GameData {
-	class TestScene : GameObject {
-		public TestScene() : base(Priorities.Scene) {
+	class TestScene : GameScene {
+		public TestScene() {
 			this.Enabled = true;
 			this.Visible = true;
 		}
@@ -15,7 +15,7 @@ namespace Totoki.ETL.GameData {
 		int count;
 		public override void Update(GameTime gameTime) {
 			count++;
-#if false
+#if true
 				var b = new Bullet(count % 2);
 				b.X = 0;
 				b.Y = 0;
@@ -45,6 +45,13 @@ namespace Totoki.ETL.GameData {
 
 		public override void Draw(GameTime gameTime) {
 			
+		}
+
+		public override void OnMessage(object sender, Message.MessageType msg, object[] args) {
+			if (msg == Message.MessageType.OnAdded) {
+				Program.Instance.Services.GetService<Ship>().Activate();
+			}
+			base.OnMessage(sender, msg, args);
 		}
 	}
 }

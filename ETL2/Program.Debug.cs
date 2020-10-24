@@ -15,8 +15,6 @@ namespace Totoki.ETL {
 		private void InitializeStatistics() {
 			sbatch = new SpriteBatch(GraphicsDevice);
 			font = Content.Load<SpriteFont>("StaticticsFont");
-			
-			ToDisposeContent(font);
 		}
 
 		[Conditional("DEBUG")]

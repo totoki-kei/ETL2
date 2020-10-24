@@ -14,9 +14,9 @@ namespace Totoki.ETL.GameData {
 			//model = Program.Instance.Content.Load<Model>("block");
 			model = Program.Instance.Content.Load<Model>("paper");
 
-			//GameObject.AddObject(this);
-			this.Enabled = true;
-			this.Visible = true;
+			// 初期状態は非表示＆動作無し
+			// 各シーンで必要性に応じてActivateまたはDeactivateを行う
+			Deactivate();
 
 			HitArea.AddHitArea(new ShipHitArea(this));
 		}
@@ -93,6 +93,16 @@ namespace Totoki.ETL.GameData {
 			
 			// motoni modosu
 			Program.Instance.DepthEnabled = true;
+		}
+
+		public void Deactivate() {
+			this.Visible = false;
+			this.Enabled = false;
+		}
+
+		public void Activate() {
+			this.Visible = true;
+			this.Enabled = true;
 		}
 
 		class ShipHitArea : HitArea {
