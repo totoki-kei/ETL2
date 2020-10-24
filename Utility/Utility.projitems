@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>54241b04-e162-4a82-96ad-9424665466b3</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Totoki.Util</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Base36.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Boxing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Coroutine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Evaluator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extention.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Jcode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ListStack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MathUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PartialArray.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SimpleColor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StringHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Struct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Token.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,50 @@
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Totoki.Util;
+
+namespace Totoki.ETL.GameData {
+	class TestScene : GameObject {
+		public TestScene() : base(Priorities.Scene) {
+			this.Enabled = true;
+			this.Visible = true;
+		}
+
+		int count;
+		public override void Update(GameTime gameTime) {
+			count++;
+#if false
+				var b = new Bullet(count % 2);
+				b.X = 0;
+				b.Y = 0;
+				b.Direction = count / 8f + MathUtil.Pi * count % 2;
+				b.Speed = (2 - (count % 2)) / 64f;
+				AddObject(b);
+#elif false
+			{
+				var b = new Bullet(count % 2);
+				b.X = 0;
+				b.Y = 10;
+				b.Direction = count / 8f + MathUtil.PiOverFour * count;
+				b.Speed = (2 - (count % 2)) / 64f;
+				AddObject(b);
+			}
+#elif true
+			if (count % 8 == 0) {
+				var b = new Bullet(0);
+				b.X = 0;
+				b.Y = 10;
+				b.Direction = 3 * MathUtil.PiOverTwo;
+				b.Speed = 0.25f;
+				AddObject(b);
+			}
+#endif
+		}
+
+		public override void Draw(GameTime gameTime) {
+			
+		}
+	}
+}

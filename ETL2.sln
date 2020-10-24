@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETL2", "ETL2\ETL2.csproj", "{C6072766-BC39-406C-8C65-A3D4183632C2}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Util", "Utility\Util.shproj", "{54241B04-E162-4A82-96AD-9424665466B3}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Utility\Utility.projitems*{54241b04-e162-4a82-96ad-9424665466b3}*SharedItemsImports = 13
+		Utility\Utility.projitems*{c6072766-bc39-406c-8c65-a3d4183632c2}*SharedItemsImports = 5
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6072766-BC39-406C-8C65-A3D4183632C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6072766-BC39-406C-8C65-A3D4183632C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6072766-BC39-406C-8C65-A3D4183632C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6072766-BC39-406C-8C65-A3D4183632C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0CDCA62-1430-41F5-896D-C5759DC5E5F5}
+	EndGlobalSection
+EndGlobal
